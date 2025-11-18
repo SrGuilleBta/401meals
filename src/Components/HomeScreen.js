@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   View, 
   Text, 
   ScrollView, 
   TouchableOpacity,
-  Image 
+  Image,
+  Animated 
 } from 'react-native';
 import { styles } from '../StyleSheets/HomeScreen.css.js';
 
@@ -12,6 +13,10 @@ const HomeScreen = () => {
   const [randomMeal, setRandomMeal] = useState(null);
   const [randomIngredients, setRandomIngredients] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
+  const [carouselRecipes, setCarouselRecipes] = useState([]);
+  const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const intervalRef = useRef(null);
 
   // Array de ingredientes populares (del 1 al 4)
   const popularIngredients = [
@@ -20,6 +25,96 @@ const HomeScreen = () => {
     { id: 3, name: 'Salmon', image: 'https://www.themealdb.com/images/ingredients/salmon.png' },
     { id: 4, name: 'Pork', image: 'https://www.themealdb.com/images/ingredients/pork.png' }
   ];
+
+  // Función para obtener 5 comidas aleatorias para el carrusel
+  const fetchCarouselRecipes = async () => {
+    try {
+      const promises = Array(5).fill().map(() => 
+        fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+          .then(response => response.json())
+      );
+      
+      const results = await Promise.all(promises);
+      const recipes = results
+        .filter(data => data.meals && data.meals.length > 0)
+        .map(data => data.meals[0]);
+      
+      setCarouselRecipes(recipes);
+    } catch (error) {
+      console.error('Error fetching carousel recipes:', error);
+    }
+  };
+
+  // Función para iniciar/reiniciar el intervalo automático
+  const startAutoRotation = () => {
+    // Limpiar intervalo existente
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    // Iniciar nuevo intervalo
+    intervalRef.current = setInterval(() => {
+      nextRecipe();
+    }, 3000);
+  };
+
+  // Función para cambiar a la siguiente receta con animación
+  const nextRecipe = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setCurrentCarouselIndex((prevIndex) => 
+        (prevIndex + 1) % carouselRecipes.length
+      );
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    });
+  };
+
+  // Función para cambiar a la receta anterior con animación
+  const prevRecipe = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setCurrentCarouselIndex((prevIndex) => 
+        prevIndex === 0 ? carouselRecipes.length - 1 : prevIndex - 1
+      );
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
+    });
+  };
+
+  // Función para manejar navegación manual (reinicia el contador)
+  const handleManualNavigation = (navigationFunction) => {
+    // Reiniciar el intervalo automático
+    startAutoRotation();
+    // Ejecutar la función de navegación
+    navigationFunction();
+  };
+
+  // Iniciar auto-rotación cuando hay recetas
+  useEffect(() => {
+    if (carouselRecipes.length > 0) {
+      startAutoRotation();
+    }
+
+    // Limpiar intervalo al desmontar el componente
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [carouselRecipes.length]);
 
   // Función para obtener una comida aleatoria
   const fetchRandomMeal = async () => {
@@ -83,6 +178,7 @@ const HomeScreen = () => {
   useEffect(() => {
     fetchRandomMeal();
     fetchAllIngredients();
+    fetchCarouselRecipes();
   }, []);
 
   return (
@@ -114,9 +210,50 @@ const HomeScreen = () => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Discover Recipes</Text>
           <View style={styles.carouselContainer}>
-            <Text style={styles.carouselText}>
-              Recipe Carousel Container
-            </Text>
+            {carouselRecipes.length > 0 ? (
+              <View style={styles.carouselContent}>
+                <View style={styles.carouselNavigation}>
+                  <TouchableOpacity 
+                    style={styles.arrowButton} 
+                    onPress={() => handleManualNavigation(prevRecipe)}
+                  >
+                    <Text style={styles.arrowText}>‹</Text>
+                  </TouchableOpacity>
+                  
+                  <Animated.View style={[styles.carouselItem, { opacity: fadeAnim }]}>
+                    <Image 
+                      source={{ uri: carouselRecipes[currentCarouselIndex].strMealThumb }} 
+                      style={styles.carouselImage}
+                    />
+                    <Text style={styles.carouselMealName}>
+                      {carouselRecipes[currentCarouselIndex].strMeal}
+                    </Text>
+                  </Animated.View>
+                  
+                  <TouchableOpacity 
+                    style={styles.arrowButton} 
+                    onPress={() => handleManualNavigation(nextRecipe)}
+                  >
+                    <Text style={styles.arrowText}>›</Text>
+                  </TouchableOpacity>
+                </View>
+                
+                {/* Indicadores de posición */}
+                <View style={styles.carouselIndicators}>
+                  {carouselRecipes.map((_, index) => (
+                    <View 
+                      key={index}
+                      style={[
+                        styles.carouselIndicator,
+                        index === currentCarouselIndex && styles.carouselIndicatorActive
+                      ]}
+                    />
+                  ))}
+                </View>
+              </View>
+            ) : (
+              <Text style={styles.containerText}>Loading recipes...</Text>
+            )}
           </View>
         </View>
 
@@ -160,7 +297,7 @@ const HomeScreen = () => {
         {/* Inspiration Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Get Inspired</Text>
-          <View >
+          <View>
             {randomIngredients.length > 0 ? (
               <View style={styles.inspirationContent}>
                 <View style={styles.ingredientsGrid}>

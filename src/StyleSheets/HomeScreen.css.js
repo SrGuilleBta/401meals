@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
     color: '#333',
   },
   carouselContainer: {
-    height: 200,
+    minHeight: 280,
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
     justifyContent: 'center',
@@ -54,11 +54,76 @@ export const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
   },
+  carouselContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  carouselNavigation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  arrowButton: {
+    width: 30,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  arrowText: {
+    fontSize: 30,
+    color: '#333',
+    fontWeight: 'bold',
+    marginTop: -5,
+  },
+  carouselItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    marginHorizontal: 10,
+  },
+  carouselImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  carouselMealName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 8,
+    color: '#333',
+  },
+  carouselIndicators: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 15,
+  },
+  carouselIndicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#ccc',
+    marginHorizontal: 4,
+  },
+  carouselIndicatorActive: {
+    backgroundColor: '#333',
+  },
   carouselText: {
     textAlign: 'center',
     color: '#666',
   },
 
+  //NO SE USA EL DE ABAJO (MANTENER POR SI ACASO)
   ingredientsContainer: {
     height: 150,
     backgroundColor: '#e8f5e8',
@@ -68,8 +133,6 @@ export const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
   },
-
-
 
   randomMealContainer: {
     minHeight: 280,
@@ -81,7 +144,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  
+  //NO SE USA EL DE ABAJO (MANTENER POR SI ACASO)
   inspirationContainer: {
     height: 380,
     backgroundColor: '#f0f0f0',
@@ -100,8 +163,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    
-    
   },
   mealImage: {
     width: 200,
@@ -125,18 +186,11 @@ export const styles = StyleSheet.create({
     marginTop: 5,
   },
   
-
-
-
-
-
-  
   ingredientsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
-
   ingredientItem: {
     width: '48%',
     alignItems: 'center',
@@ -161,9 +215,8 @@ export const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
   },
-
   inspirationContent: {
-  width: '100%',
-  alignItems: 'center',
-},
+    width: '100%',
+    alignItems: 'center',
+  },
 });
