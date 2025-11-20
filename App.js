@@ -4,6 +4,8 @@ import { View } from 'react-native';
 import HomeScreen from './src/Components/HomeScreen';
 import MealDetailScreen from './src/Components/MealDetailScreen';
 import IngredientRecipesScreen from './src/Components/IngredientRecipesScreen';
+import CountriesScreen from './src/Components/CountriesScreen';
+import CountryRecipesScreen from './src/Components/CountryRecipesScreen';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('Home');
@@ -36,6 +38,21 @@ export default function App() {
             navigateTo={navigateTo} 
             goBack={goBack}
             ingredient={screenParams.ingredient}
+          />
+        );
+      case 'Countries':
+        return (
+          <CountriesScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
+          />
+        );
+      case 'CountryRecipes':
+        return (
+          <CountryRecipesScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
+            country={screenParams.country}
           />
         );
       default:

@@ -8,7 +8,7 @@ import {
 import { styles } from '../StyleSheets/HeaderWithNav.css.js';
 import MenuModal from './MenuModal';
 
-const HeaderWithNav = ({ onRefreshHome }) => {
+const HeaderWithNav = ({ onRefreshHome, navigateTo }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [fadeAnim] = useState(new Animated.Value(0));
 
@@ -34,6 +34,21 @@ const HeaderWithNav = ({ onRefreshHome }) => {
   const handleMenuSelect = (option) => {
     console.log(`Selected: ${option}`);
     closeMenu();
+    
+    // Navegar a diferentes pantallas basado en la selección
+    switch (option) {
+      case 'Countries':
+        navigateTo('Countries');
+        break;
+      case 'Categories':
+        console.log('Navigate to Categories');
+        break;
+      case 'About':
+        console.log('Navigate to About');
+        break;
+      default:
+        break;
+    }
   };
 
   return (

@@ -11,7 +11,7 @@ import { styles } from '../StyleSheets/MealDetailScreen.css.js';
 import HeaderWithNav from './HeaderWithNav';
 import * as FileSystem from 'expo-file-system';
 
-const MealDetailScreen = ({ meal, goBack }) => {
+const MealDetailScreen = ({ meal, goBack, navigateTo }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   // Función para agregar a favoritos (guardar en txt)
@@ -48,12 +48,12 @@ const MealDetailScreen = ({ meal, goBack }) => {
 
   // Función para refrescar (volver a home)
   const refreshHome = () => {
-    goBack();
+    navigateTo('Home');
   };
 
   return (
     <View style={styles.container}>
-      <HeaderWithNav onRefreshHome={refreshHome} />
+      <HeaderWithNav onRefreshHome={refreshHome} navigateTo={navigateTo} />
       
       <ScrollView style={styles.content}>
         {/* Imagen de la comida */}
