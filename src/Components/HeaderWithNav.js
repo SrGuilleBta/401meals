@@ -41,7 +41,10 @@ const HeaderWithNav = ({ onRefreshHome, navigateTo }) => {
         navigateTo('Countries');
         break;
       case 'Categories':
-        console.log('Navigate to Categories');
+        navigateTo('Categories'); // ← AGREGADO
+        break;
+      case 'Dark Mode':
+        console.log('Navigate to Dark Mode');
         break;
       case 'About':
         console.log('Navigate to About');
@@ -49,6 +52,10 @@ const HeaderWithNav = ({ onRefreshHome, navigateTo }) => {
       default:
         break;
     }
+  };
+
+  const navigateToSearch = () => {
+    navigateTo('Search');
   };
 
   return (
@@ -61,14 +68,17 @@ const HeaderWithNav = ({ onRefreshHome, navigateTo }) => {
         <TouchableOpacity style={styles.navItem} onPress={onRefreshHome}>
           <Text style={styles.navText}>🏠 HOME</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity 
+          style={styles.navItem} 
+          onPress={navigateToSearch}
+        >
           <Text style={styles.navText}>🔍 SEARCH</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
           <Text style={styles.navText}>❤️ Favorites</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={openMenu}>
-          <Text style={styles.navText}>☰ More</Text>
+          <Text style={styles.navText}>☰ Menu</Text>
         </TouchableOpacity>
       </View>
 

@@ -6,6 +6,9 @@ import MealDetailScreen from './src/Components/MealDetailScreen';
 import IngredientRecipesScreen from './src/Components/IngredientRecipesScreen';
 import CountriesScreen from './src/Components/CountriesScreen';
 import CountryRecipesScreen from './src/Components/CountryRecipesScreen';
+import SearchScreen from './src/Components/SearchScreen';
+import CategoriesScreen from './src/Components/CategoriesScreen';
+import CategoryRecipesScreen from './src/Components/CategoryRecipesScreen';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('Home');
@@ -53,6 +56,28 @@ export default function App() {
             navigateTo={navigateTo} 
             goBack={goBack}
             country={screenParams.country}
+          />
+        );
+      case 'Search':
+        return (
+          <SearchScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
+          />
+        );
+      case 'Categories':
+        return (
+          <CategoriesScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
+          />
+        );
+      case 'CategoryRecipes':
+        return (
+          <CategoryRecipesScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
+            category={screenParams.category}
           />
         );
       default:
