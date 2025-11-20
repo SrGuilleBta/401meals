@@ -27,6 +27,15 @@ const HomeScreen = ({ navigateTo }) => {
     { id: 4, name: 'Pork', image: 'https://www.themealdb.com/images/ingredients/pork.png' }
   ];
 
+  // Función para navegar a recetas por ingrediente
+  const navigateToIngredientRecipes = (ingredient) => {
+    navigateTo('IngredientRecipes', { ingredient });
+  };
+
+
+
+
+
   // Función para navegar a detalles de comida
   const navigateToMealDetail = (meal) => {
     navigateTo('MealDetail', { meal });
@@ -181,7 +190,7 @@ const HomeScreen = ({ navigateTo }) => {
     }
   };
 
-  // Cargar datos al iniciar
+    // Cargar datos al iniciar
   useEffect(() => {
     refreshHomeScreen();
     fetchAllIngredients();
@@ -189,7 +198,7 @@ const HomeScreen = ({ navigateTo }) => {
 
   return (
     <View style={styles.container}>
-      <HeaderWithNav onRefreshHome={refreshHomeScreen} />
+      <HeaderWithNav onRefreshHome={refreshHomeScreen} navigateTo={navigateTo} />
 
       {/* Main Content */}
       <ScrollView style={styles.content}>
@@ -251,13 +260,17 @@ const HomeScreen = ({ navigateTo }) => {
           <Text style={styles.sectionTitle}>Popular Ingredients</Text>
           <View style={styles.ingredientsGrid}>
             {popularIngredients.map((ingredient) => (
-              <View key={ingredient.id} style={styles.ingredientItem}>
+              <TouchableOpacity 
+                key={ingredient.id} 
+                style={styles.ingredientItem}
+                onPress={() => navigateToIngredientRecipes(ingredient)}
+              >
                 <Image 
                   source={{ uri: ingredient.image }} 
                   style={styles.ingredientImage}
                 />
                 <Text style={styles.ingredientName}>{ingredient.name}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
@@ -293,13 +306,17 @@ const HomeScreen = ({ navigateTo }) => {
               <View style={styles.inspirationContent}>
                 <View style={styles.ingredientsGrid}>
                   {randomIngredients.map((ingredient) => (
-                    <View key={ingredient.id} style={styles.ingredientItem}>
+                    <TouchableOpacity 
+                      key={ingredient.id} 
+                      style={styles.ingredientItem}
+                      onPress={() => navigateToIngredientRecipes(ingredient)}
+                    >
                       <Image 
                         source={{ uri: ingredient.image }} 
                         style={styles.ingredientImage}
                       />
                       <Text style={styles.ingredientName}>{ingredient.name}</Text>
-                    </View>
+                    </TouchableOpacity>
                   ))}
                 </View>
                 <TouchableOpacity onPress={refreshRandomIngredients}>

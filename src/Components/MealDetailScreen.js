@@ -106,7 +106,7 @@ const MealDetailScreen = ({ meal, goBack }) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Video Tutorial</Text>
             <Text style={styles.videoText}>
-              Watch on YouTube: <a href='{meal.strYoutube}'>{meal.strYoutube}</a>
+              Watch on YouTube: {meal.strYoutube}
             </Text>
           </View>
         )}

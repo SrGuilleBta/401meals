@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { View } from 'react-native';
 import HomeScreen from './src/Components/HomeScreen';
 import MealDetailScreen from './src/Components/MealDetailScreen';
+import IngredientRecipesScreen from './src/Components/IngredientRecipesScreen';
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('Home');
@@ -27,6 +28,14 @@ export default function App() {
             navigateTo={navigateTo} 
             goBack={goBack}
             meal={screenParams.meal}
+          />
+        );
+      case 'IngredientRecipes':
+        return (
+          <IngredientRecipesScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
+            ingredient={screenParams.ingredient}
           />
         );
       default:
