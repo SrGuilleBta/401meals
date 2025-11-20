@@ -8,8 +8,9 @@ import {
   Animated 
 } from 'react-native';
 import { styles } from '../StyleSheets/HomeScreen.css.js';
+import HeaderWithNav from './HeaderWithNav';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigateTo }) => {
   const [randomMeal, setRandomMeal] = useState(null);
   const [randomIngredients, setRandomIngredients] = useState([]);
   const [allIngredients, setAllIngredients] = useState([]);
@@ -25,6 +26,20 @@ const HomeScreen = () => {
     { id: 3, name: 'Salmon', image: 'https://www.themealdb.com/images/ingredients/salmon.png' },
     { id: 4, name: 'Pork', image: 'https://www.themealdb.com/images/ingredients/pork.png' }
   ];
+
+  // Función para navegar a detalles de comida
+  const navigateToMealDetail = (meal) => {
+    navigateTo('MealDetail', { meal });
+  };
+
+  // Función para refrescar toda la pantalla de inicio
+  const refreshHomeScreen = () => {
+    fetchRandomMeal();
+    fetchCarouselRecipes();
+    if (allIngredients.length > 0) {
+      generateRandomIngredients();
+    }
+  };
 
   // Función para obtener 5 comidas aleatorias para el carrusel
   const fetchCarouselRecipes = async () => {
@@ -47,12 +62,10 @@ const HomeScreen = () => {
 
   // Función para iniciar/reiniciar el intervalo automático
   const startAutoRotation = () => {
-    // Limpiar intervalo existente
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
     
-    // Iniciar nuevo intervalo
     intervalRef.current = setInterval(() => {
       nextRecipe();
     }, 3000);
@@ -96,9 +109,7 @@ const HomeScreen = () => {
 
   // Función para manejar navegación manual (reinicia el contador)
   const handleManualNavigation = (navigationFunction) => {
-    // Reiniciar el intervalo automático
     startAutoRotation();
-    // Ejecutar la función de navegación
     navigationFunction();
   };
 
@@ -108,7 +119,6 @@ const HomeScreen = () => {
       startAutoRotation();
     }
 
-    // Limpiar intervalo al desmontar el componente
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
@@ -147,17 +157,14 @@ const HomeScreen = () => {
   const generateRandomIngredients = (ingredientsList = allIngredients) => {
     if (ingredientsList.length === 0) return;
     
-    // Excluimos los primeros 4 ingredientes (los populares)
     const availableIngredients = ingredientsList.slice(4);
     
-    // Generamos 4 índices aleatorios únicos
     const randomIndices = new Set();
     while (randomIndices.size < 4 && randomIndices.size < availableIngredients.length) {
       const randomIndex = Math.floor(Math.random() * availableIngredients.length);
       randomIndices.add(randomIndex);
     }
     
-    // Obtenemos los ingredientes aleatorios
     const selectedIngredients = Array.from(randomIndices).map(index => ({
       id: availableIngredients[index].idIngredient,
       name: availableIngredients[index].strIngredient,
@@ -176,33 +183,13 @@ const HomeScreen = () => {
 
   // Cargar datos al iniciar
   useEffect(() => {
-    fetchRandomMeal();
+    refreshHomeScreen();
     fetchAllIngredients();
-    fetchCarouselRecipes();
   }, []);
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>401 MEALS</Text>
-      </View>
-
-      {/* Navigation Bar */}
-      <View style={styles.navBar}>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>🏠 HOME</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>🔍 SEARCH</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>❤️ Favorites</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Text style={styles.navText}>☰ More</Text>
-        </TouchableOpacity>
-      </View>
+      <HeaderWithNav onRefreshHome={refreshHomeScreen} />
 
       {/* Main Content */}
       <ScrollView style={styles.content}>
@@ -221,13 +208,15 @@ const HomeScreen = () => {
                   </TouchableOpacity>
                   
                   <Animated.View style={[styles.carouselItem, { opacity: fadeAnim }]}>
-                    <Image 
-                      source={{ uri: carouselRecipes[currentCarouselIndex].strMealThumb }} 
-                      style={styles.carouselImage}
-                    />
-                    <Text style={styles.carouselMealName}>
-                      {carouselRecipes[currentCarouselIndex].strMeal}
-                    </Text>
+                    <TouchableOpacity onPress={() => navigateToMealDetail(carouselRecipes[currentCarouselIndex])}>
+                      <Image 
+                        source={{ uri: carouselRecipes[currentCarouselIndex].strMealThumb }} 
+                        style={styles.carouselImage}
+                      />
+                      <Text style={styles.carouselMealName}>
+                        {carouselRecipes[currentCarouselIndex].strMeal}
+                      </Text>
+                    </TouchableOpacity>
                   </Animated.View>
                   
                   <TouchableOpacity 
@@ -279,11 +268,13 @@ const HomeScreen = () => {
           <View style={styles.randomMealContainer}>
             {randomMeal ? (
               <View style={styles.mealContent}>
-                <Image 
-                  source={{ uri: randomMeal.strMealThumb }} 
-                  style={styles.mealImage}
-                />
-                <Text style={styles.mealName}>{randomMeal.strMeal}</Text>
+                <TouchableOpacity onPress={() => navigateToMealDetail(randomMeal)}>
+                  <Image 
+                    source={{ uri: randomMeal.strMealThumb }} 
+                    style={styles.mealImage}
+                  />
+                  <Text style={styles.mealName}>{randomMeal.strMeal}</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={fetchRandomMeal}>
                   <Text style={styles.refreshText}>Tap to refresh</Text>
                 </TouchableOpacity>

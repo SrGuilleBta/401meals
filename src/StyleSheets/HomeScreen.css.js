@@ -5,36 +5,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    backgroundColor: '#f8f8f8',
-    paddingTop: 50,
-    paddingBottom: 15,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  navBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  navItem: {
-    paddingHorizontal: 10,
-  },
-  navText: {
-    fontSize: 14,
-    color: '#333',
-  },
   content: {
     flex: 1,
+  },
+  scrollContent: {
     padding: 20,
+    paddingBottom: 40, // Espacio extra al final para mejor scroll
   },
   section: {
     marginBottom: 30,
@@ -66,7 +42,7 @@ export const styles = StyleSheet.create({
     width: '100%',
   },
   arrowButton: {
-    width: 30,
+    width: 40,
     height: 40,
     borderRadius: 25,
     backgroundColor: '#fff',
@@ -79,10 +55,11 @@ export const styles = StyleSheet.create({
     elevation: 3,
   },
   arrowText: {
-    fontSize: 30,
+    fontSize: 24,
     color: '#333',
     fontWeight: 'bold',
-    marginTop: -5,
+    textAlign: 'center',
+    lineHeight: 24,
   },
   carouselItem: {
     alignItems: 'center',
@@ -90,18 +67,24 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 10,
   },
+  carouselTouchable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   carouselImage: {
     width: 200,
     height: 200,
     borderRadius: 10,
     marginBottom: 10,
+    alignSelf: 'center', // ASEGURA CENTRADO
   },
   carouselMealName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 8,
     color: '#333',
+    paddingHorizontal: 10,
   },
   carouselIndicators: {
     flexDirection: 'row',
@@ -118,35 +101,8 @@ export const styles = StyleSheet.create({
   carouselIndicatorActive: {
     backgroundColor: '#333',
   },
-  carouselText: {
-    textAlign: 'center',
-    color: '#666',
-  },
-
-  //NO SE USA EL DE ABAJO (MANTENER POR SI ACASO)
-  ingredientsContainer: {
-    height: 150,
-    backgroundColor: '#e8f5e8',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    marginBottom: 20,
-  },
-
   randomMealContainer: {
     minHeight: 280,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-    marginBottom: 20,
-  },
-
-  //NO SE USA EL DE ABAJO (MANTENER POR SI ACASO)
-  inspirationContainer: {
-    height: 380,
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
     justifyContent: 'center',
@@ -164,18 +120,25 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
   },
+  mealTouchable: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
   mealImage: {
     width: 200,
     height: 200,
     borderRadius: 10,
     marginBottom: 10,
+    alignSelf: 'center', // CENTRADO ASEGURADO
   },
   mealName: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 8,
     color: '#333',
+    paddingHorizontal: 10,
   },
   refreshText: {
     fontSize: 14,
@@ -185,7 +148,6 @@ export const styles = StyleSheet.create({
     padding: 8,
     marginTop: 5,
   },
-  
   ingredientsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -208,6 +170,7 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginBottom: 8,
+    alignSelf: 'center', // CENTRADO ASEGURADO
   },
   ingredientName: {
     fontSize: 16,
@@ -219,4 +182,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
+
+
+  
 });

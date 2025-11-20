@@ -1,17 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import HomeScreen from './src/Components/HomeScreen';
-import { styles }from './src/StyleSheets/App.css.js';
-
+import MealDetailScreen from './src/Components/MealDetailScreen';
 
 export default function App() {
+  const [currentScreen, setCurrentScreen] = useState('Home');
+  const [screenParams, setScreenParams] = useState({});
+
+  const navigateTo = (screenName, params = {}) => {
+    setScreenParams(params);
+    setCurrentScreen(screenName);
+  };
+
+  const goBack = () => {
+    setCurrentScreen('Home');
+  };
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'Home':
+        return <HomeScreen navigateTo={navigateTo} />;
+      case 'MealDetail':
+        return (
+          <MealDetailScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
+            meal={screenParams.meal}
+          />
+        );
+      default:
+        return <HomeScreen navigateTo={navigateTo} />;
+    }
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
-      <HomeScreen />
+      {renderScreen()}
     </View>
   );
 }
-
-
