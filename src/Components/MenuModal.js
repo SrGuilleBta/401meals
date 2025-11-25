@@ -52,12 +52,6 @@ const MenuModal = ({ visible, fadeAnim, onClose, onMenuSelect }) => {
               <Text style={styles.menuItemText}>Categories</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity 
-              style={styles.menuItem}
-              onPress={() => onMenuSelect('Dark Mode')}
-            >
-              <Text style={styles.menuItemText}>Dark Mode</Text>
-            </TouchableOpacity>
             
             <TouchableOpacity 
               style={styles.menuItem}

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: 20,
-    paddingBottom: 40, // Espacio extra al final para mejor scroll
+    paddingBottom: 40, 
   },
   section: {
     marginBottom: 30,
@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginBottom: 10,
-    alignSelf: 'center', // ASEGURA CENTRADO
+    alignSelf: 'center', 
   },
   carouselMealName: {
     fontSize: 18,
@@ -130,7 +130,7 @@ export const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginBottom: 10,
-    alignSelf: 'center', // CENTRADO ASEGURADO
+    alignSelf: 'center', 
   },
   mealName: {
     fontSize: 18,
@@ -170,7 +170,7 @@ export const styles = StyleSheet.create({
     width: 60,
     height: 60,
     marginBottom: 8,
-    alignSelf: 'center', // CENTRADO ASEGURADO
+    alignSelf: 'center', 
   },
   ingredientName: {
     fontSize: 16,

@@ -9,6 +9,8 @@ import CountryRecipesScreen from './src/Components/CountryRecipesScreen';
 import SearchScreen from './src/Components/SearchScreen';
 import CategoriesScreen from './src/Components/CategoriesScreen';
 import CategoryRecipesScreen from './src/Components/CategoryRecipesScreen';
+import AboutScreen from './src/Components/AboutScreen';
+
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('Home');
@@ -78,6 +80,13 @@ export default function App() {
             navigateTo={navigateTo} 
             goBack={goBack}
             category={screenParams.category}
+          />
+        );
+        case 'About':
+        return (
+          <AboutScreen 
+            navigateTo={navigateTo} 
+            goBack={goBack}
           />
         );
       default:

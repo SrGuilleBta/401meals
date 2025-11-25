@@ -27,21 +27,6 @@ export const styles = StyleSheet.create({
     color: '#333',
     flex: 1,
   },
-  favoriteButton: {
-    backgroundColor: '#f0f0f0',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginLeft: 10,
-  },
-  favoriteButtonActive: {
-    backgroundColor: '#ffebee',
-  },
-  favoriteButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
-  },
   infoSection: {
     backgroundColor: '#f8f8f8',
     padding: 15,
