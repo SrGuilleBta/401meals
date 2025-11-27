@@ -21,7 +21,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.guillermobta.401mealsapp"
+      "package": "com.guillermobta.meals401app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
